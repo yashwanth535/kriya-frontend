@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import { Clock, Zap, Shield, BarChart3, Sun, Moon, CheckCircle, Users, Globe } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
@@ -13,8 +12,8 @@ const LandingPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
-                <Clock className="h-5 w-5 text-white" />
+              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center overflow-hidden">
+                <img src="/wall-clock.png" alt="Clock Icon" className="h-5 w-5 object-contain" />
               </div>
               <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                 Kriya
@@ -108,8 +107,8 @@ const LandingPage = () => {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow duration-200">
-            <div className="bg-blue-100 dark:bg-blue-900/30 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-              <Clock className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+            <div className="bg-blue-100 dark:bg-blue-900/30 w-12 h-12 rounded-lg flex items-center justify-center mb-4 overflow-hidden">
+              <img src="/wall-clock.png" alt="Clock Icon" className="h-6 w-6 object-contain" />
             </div>
             <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
               Advanced Scheduling
@@ -199,8 +198,8 @@ const LandingPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="text-center">
             <div className="flex items-center justify-center space-x-3 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
-                <Clock className="h-5 w-5 text-white" />
+              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center overflow-hidden">
+                <img src="/wall-clock.png" alt="Clock Icon" className="h-5 w-5 object-contain" />
               </div>
               <h3 className="text-xl font-bold">Kriya</h3>
             </div>
