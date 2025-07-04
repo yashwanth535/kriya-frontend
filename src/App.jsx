@@ -1,3 +1,4 @@
+
 import { Routes, Route } from 'react-router-dom'
 import LandingPage from './pages/LandingPage'
 import SignIn from './pages/SignIn'
@@ -11,7 +12,7 @@ import RedirectToHomeIfLoggedIn from './pages/ui/RedirectToHomeIfLoggedIn';
 
 function App() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
       <Routes>
         <Route 
           path="/" 
