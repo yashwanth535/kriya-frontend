@@ -5,6 +5,15 @@
     <link rel="icon" type="image/png" href="/wall-clock.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kriya</title>
+    <script>
+      // Immediately set theme to prevent flash
+      (function() {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

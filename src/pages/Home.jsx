@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Plus, RefreshCw, Search, Grid3X3, List, Clock, TrendingUp } from 'lucide-react';
 import axios from 'axios';
@@ -10,14 +9,32 @@ import JobForm from '../components/JobForm';
 const Home = () => {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [showJobForm, setShowJobForm] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const [viewMode, setViewMode] = useState('card'); // 'card' or 'list'
+  const [viewMode, setViewMode] = useState(() => {
+    // Initialize from localStorage or default to 'card'
+    const savedViewMode = localStorage.getItem('viewMode');
+    return savedViewMode || 'card';
+  });
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
   useEffect(() => {
     fetchJobs();
+    
+    // Set up interval to fetch jobs every minute
+    const interval = setInterval(() => {
+      fetchJobs(true); // Use refresh mode to avoid showing loading spinner
+    }, 60000); // 60000ms = 1 minute
+    
+    // Cleanup interval on component unmount
+    return () => clearInterval(interval);
   }, []);
+
+  // Save viewMode to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('viewMode', viewMode);
+  }, [viewMode]);
 
   const handleLogout = async () => {
     try {
@@ -34,7 +51,13 @@ const Home = () => {
     }
   };
 
-  const fetchJobs = async () => {
+  const fetchJobs = async (isRefresh = false) => {
+    if (isRefresh) {
+      setRefreshing(true);
+    } else {
+      setLoading(true);
+    }
+    
     try {
       const response = await axios.get(`${API_URL}/api/job`, {
         withCredentials: true
@@ -45,7 +68,11 @@ const Home = () => {
       toast.error('Failed to fetch jobs');
       setJobs([]); // fallback
     } finally {
-      setLoading(false);
+      if (isRefresh) {
+        setRefreshing(false);
+      } else {
+        setLoading(false);
+      }
     }
   };
 
@@ -63,7 +90,7 @@ const Home = () => {
   };
 
   const handleRefresh = () => {
-    fetchJobs();
+    fetchJobs(true);
   };
 
   const filteredJobs = jobs.filter(job => 
@@ -142,9 +169,19 @@ const Home = () => {
               <button
                 onClick={handleRefresh}
                 className="btn-secondary flex items-center space-x-2"
+                disabled={refreshing}
               >
-                <RefreshCw className="h-4 w-4" />
-                <span>Refresh</span>
+                {refreshing ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-600"></div>
+                    <span>Refreshing...</span>
+                  </>
+                ) : (
+                  <>
+                    <RefreshCw className="h-4 w-4" />
+                    <span>Refresh</span>
+                  </>
+                )}
               </button>
               <button
                 onClick={() => setShowJobForm(true)}

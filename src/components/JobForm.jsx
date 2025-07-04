@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { X, Save } from 'lucide-react';
 import axios from 'axios';
+import { toast } from 'react-hot-toast';
 
 const JobForm = ({ job, onSave, onCancel }) => {
   const [formData, setFormData] = useState({
@@ -85,11 +86,18 @@ const JobForm = ({ job, onSave, onCancel }) => {
         const response = await axios.put(`${API_URL}/api/job/${job._id}`, formData, { withCredentials: true });
         onSave(response.data.job);
       } else {
-        // Create job (keep old behavior)
-        onSave(formData);
+        // Create job
+        const response = await axios.post(`${API_URL}/api/job`, formData, { withCredentials: true });
+        onSave(response.data.job);
       }
     } catch (error) {
-      // Optionally show error toast here
+      console.error('Error saving job:', error);
+      // Show error toast
+      if (error.response?.data?.error) {
+        toast.error(error.response.data.error);
+      } else {
+        toast.error('Failed to save job');
+      }
     }
   };
 
@@ -149,19 +157,19 @@ const JobForm = ({ job, onSave, onCancel }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto border border-gray-100">
-        <div className="flex justify-between items-center p-6 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-t-2xl">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto border border-gray-100 dark:border-gray-700">
+        <div className="flex justify-between items-center p-6 border-b border-gray-100 dark:border-gray-700 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-t-2xl">
           <div>
-            <h2 className="text-xl font-semibold text-gray-900">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
               {job ? 'Edit Job' : 'Create New Job'}
             </h2>
-            <p className="text-sm text-gray-600 mt-1">
+            <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
               {job ? 'Update your cron job configuration' : 'Set up a new scheduled task'}
             </p>
           </div>
           <button
             onClick={onCancel}
-            className="text-gray-400 hover:text-gray-600 hover:bg-gray-100 p-2 rounded-lg transition-colors"
+            className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded-lg transition-colors"
           >
             <X className="h-5 w-5" />
           </button>
@@ -169,7 +177,7 @@ const JobForm = ({ job, onSave, onCancel }) => {
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Job Name *
             </label>
             <input
@@ -177,14 +185,14 @@ const JobForm = ({ job, onSave, onCancel }) => {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className={`input-field ${errors.name ? 'border-red-500' : ''}`}
+              className={`input-field ${errors.name ? 'border-red-500 dark:border-red-400' : ''}`}
               placeholder="Enter job name"
             />
-            {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
+            {errors.name && <p className="text-red-500 dark:text-red-400 text-sm mt-1">{errors.name}</p>}
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Description *
             </label>
             <textarea
@@ -192,14 +200,14 @@ const JobForm = ({ job, onSave, onCancel }) => {
               value={formData.description}
               onChange={handleChange}
               rows={3}
-              className={`input-field ${errors.description ? 'border-red-500' : ''}`}
+              className={`input-field ${errors.description ? 'border-red-500 dark:border-red-400' : ''}`}
               placeholder="Enter job description"
             />
-            {errors.description && <p className="text-red-500 text-sm mt-1">{errors.description}</p>}
+            {errors.description && <p className="text-red-500 dark:text-red-400 text-sm mt-1">{errors.description}</p>}
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Cron Expression *
             </label>
             <input
@@ -207,20 +215,20 @@ const JobForm = ({ job, onSave, onCancel }) => {
               name="cronExpression"
               value={formData.cronExpression}
               onChange={handleChange}
-              className={`input-field font-mono ${errors.cronExpression ? 'border-red-500' : ''}`}
+              className={`input-field font-mono ${errors.cronExpression ? 'border-red-500 dark:border-red-400' : ''}`}
               placeholder="* * * * *"
             />
-            {errors.cronExpression && <p className="text-red-500 text-sm mt-1">{errors.cronExpression}</p>}
+            {errors.cronExpression && <p className="text-red-500 dark:text-red-400 text-sm mt-1">{errors.cronExpression}</p>}
             
             <div className="mt-2">
-              <p className="text-xs text-gray-500 mb-2">Common examples:</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">Common examples:</p>
               <div className="grid grid-cols-2 gap-1">
                 {cronExamples.map((example, index) => (
                   <button
                     key={index}
                     type="button"
                     onClick={() => setFormData(prev => ({ ...prev, cronExpression: example.value }))}
-                    className="text-xs text-blue-600 hover:text-blue-800 text-left p-1 rounded hover:bg-blue-50"
+                    className="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-left p-1 rounded hover:bg-blue-50 dark:hover:bg-blue-900/20"
                   >
                     <div className="font-medium">{example.label}</div>
                     <div className="font-mono">{example.value}</div>
@@ -231,7 +239,7 @@ const JobForm = ({ job, onSave, onCancel }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               HTTP Method *
             </label>
             <select
@@ -247,7 +255,7 @@ const JobForm = ({ job, onSave, onCancel }) => {
 
           {formData.method === 'POST' && (
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Request Body (JSON)
             </label>
             <textarea
@@ -263,7 +271,7 @@ const JobForm = ({ job, onSave, onCancel }) => {
 
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Callback URL *
             </label>
             <input
@@ -271,10 +279,10 @@ const JobForm = ({ job, onSave, onCancel }) => {
               name="callbackUrl"
               value={formData.callbackUrl}
               onChange={handleChange}
-              className={`input-field ${errors.callbackUrl ? 'border-red-500' : ''}`}
+              className={`input-field ${errors.callbackUrl ? 'border-red-500 dark:border-red-400' : ''}`}
               placeholder="https://api.example.com/webhook"
             />
-            {errors.callbackUrl && <p className="text-red-500 text-sm mt-1">{errors.callbackUrl}</p>}
+            {errors.callbackUrl && <p className="text-red-500 dark:text-red-400 text-sm mt-1">{errors.callbackUrl}</p>}
             <button
               type="button"
               onClick={handleTestCallback}
@@ -284,10 +292,10 @@ const JobForm = ({ job, onSave, onCancel }) => {
               {isTestingCallback ? 'Testing...' : 'Test Callback URL'}
             </button>
             {isCallbackTested && !callbackTestError && (
-              <p className="text-green-600 text-sm mt-1">Callback URL is valid!</p>
+              <p className="text-green-600 dark:text-green-400 text-sm mt-1">Callback URL is valid!</p>
             )}
             {callbackTestError && (
-              <p className="text-red-500 text-sm mt-1">{callbackTestError}</p>
+              <p className="text-red-500 dark:text-red-400 text-sm mt-1">{callbackTestError}</p>
             )}
           </div>
 
@@ -297,19 +305,19 @@ const JobForm = ({ job, onSave, onCancel }) => {
               name="isActive"
               checked={formData.isActive}
               onChange={handleChange}
-              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-600 rounded"
             />
-            <label className="ml-2 block text-sm text-gray-900">
+            <label className="ml-2 block text-sm text-gray-900 dark:text-white">
               Active
             </label>
           </div>
 
-          <div className="flex space-x-3 pt-6 border-t border-gray-100">
+          <div className="flex space-x-3 pt-6 border-t border-gray-100 dark:border-gray-700">
             <button
               type="submit"
               className={`flex items-center justify-center space-x-2 flex-1 font-medium py-3 px-6 rounded-lg transition-all duration-200 ${
                 (!isCallbackTested || !!callbackTestError) 
-                  ? 'bg-gray-200 text-gray-500 cursor-not-allowed' 
+                  ? 'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400 cursor-not-allowed' 
                   : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl'
               }`}
               disabled={!isCallbackTested || !!callbackTestError}
@@ -325,7 +333,7 @@ const JobForm = ({ job, onSave, onCancel }) => {
             <button
               type="button"
               onClick={onCancel}
-              className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-3 px-6 rounded-lg transition-colors duration-200"
+              className="flex-1 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium py-3 px-6 rounded-lg transition-colors duration-200"
             >
               Cancel
             </button>
