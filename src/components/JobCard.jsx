@@ -1,7 +1,7 @@
-import { Clock, CheckCircle, XCircle } from 'lucide-react';
+import { Clock, CheckCircle, XCircle, Calendar, Code, Globe } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-const JobCard = ({ job }) => {
+const JobCard = ({ job, viewMode = 'card' }) => {
   const navigate = useNavigate();
   const handleClick = () => navigate(`/home/${job._id}`);
 
@@ -14,42 +14,127 @@ const JobCard = ({ job }) => {
     return isActive ? 'text-green-600' : 'text-red-600';
   };
 
+  const getStatusBadgeColor = (isActive) => {
+    return isActive 
+      ? 'bg-green-100 text-green-800 border-green-200' 
+      : 'bg-red-100 text-red-800 border-red-200';
+  };
+
   const getStatusIcon = (isActive) => {
     return isActive ? <CheckCircle className="h-4 w-4" /> : <XCircle className="h-4 w-4" />;
   };
 
+  const getMethodBadgeColor = (method) => {
+    return method === 'GET' 
+      ? 'bg-blue-100 text-blue-800 border-blue-200'
+      : 'bg-orange-100 text-orange-800 border-orange-200';
+  };
+
+  if (viewMode === 'list') {
+    return (
+      <div
+        className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md hover:border-blue-200 transition-all duration-200 cursor-pointer group"
+        onClick={handleClick}
+      >
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-4 flex-1">
+            <div className="flex-shrink-0">
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
+                <Clock className="h-5 w-5 text-white" />
+              </div>
+            </div>
+            
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center space-x-3 mb-1">
+                <h3 className="text-lg font-semibold text-gray-900 truncate group-hover:text-blue-600 transition-colors">
+                  {job.name}
+                </h3>
+                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getStatusBadgeColor(job.isActive)}`}>
+                  {getStatusIcon(job.isActive)}
+                  <span className="ml-1">{job.isActive ? 'Active' : 'Inactive'}</span>
+                </span>
+                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getMethodBadgeColor(job.method)}`}>
+                  {job.method}
+                </span>
+              </div>
+              <p className="text-gray-600 text-sm truncate">{job.description}</p>
+            </div>
+          </div>
+          
+          <div className="flex items-center space-x-6 text-sm text-gray-500">
+            <div className="text-center">
+              <div className="font-mono text-xs bg-gray-100 px-2 py-1 rounded">{job.cronExpression}</div>
+              <div className="text-xs mt-1">Schedule</div>
+            </div>
+            <div className="text-center">
+              <div className="font-medium text-gray-700">{formatDate(job.lastExecuted)}</div>
+              <div className="text-xs">Last Run</div>
+            </div>
+            <div className="text-center">
+              <div className="font-medium text-gray-700">{formatDate(job.createdAt)}</div>
+              <div className="text-xs">Created</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div
-      className="card hover:shadow-lg transition-shadow duration-200 cursor-pointer"
+      className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-lg hover:border-blue-200 transition-all duration-200 cursor-pointer group"
       onClick={handleClick}
     >
       <div className="flex justify-between items-start mb-4">
-        <div className="flex items-center space-x-2">
-          <Clock className="h-5 w-5 text-blue-600" />
-          <h3 className="text-lg font-semibold text-gray-900">{job.name}</h3>
+        <div className="flex items-center space-x-3">
+          <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
+            <Clock className="h-5 w-5 text-white" />
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+              {job.name}
+            </h3>
+            <div className="flex items-center space-x-2 mt-1">
+              <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${getMethodBadgeColor(job.method)}`}>
+                {job.method}
+              </span>
+            </div>
+          </div>
         </div>
-        <div className={`flex items-center space-x-1 ${getStatusColor(job.isActive)}`}>
+        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getStatusBadgeColor(job.isActive)}`}>
           {getStatusIcon(job.isActive)}
-          <span className="text-sm font-medium">
-            {job.isActive ? 'Active' : 'Inactive'}
-          </span>
-        </div>
+          <span className="ml-1">{job.isActive ? 'Active' : 'Inactive'}</span>
+        </span>
       </div>
 
-      <p className="text-gray-600 mb-4">{job.description}</p>
+      <p className="text-gray-600 mb-4 text-sm leading-relaxed">{job.description}</p>
 
-      <div className="space-y-2">
-        <div className="flex justify-between text-sm">
-          <span className="text-gray-500">Cron Expression:</span>
-          <span className="font-mono bg-gray-100 px-2 py-1 rounded">{job.cronExpression}</span>
+      <div className="space-y-3">
+        <div className="flex items-center justify-between text-sm">
+          <div className="flex items-center space-x-2 text-gray-500">
+            <Code className="h-4 w-4" />
+            <span>Schedule:</span>
+          </div>
+          <span className="font-mono bg-gradient-to-r from-gray-100 to-gray-200 px-3 py-1 rounded-md text-sm font-medium">
+            {job.cronExpression}
+          </span>
         </div>
-        <div className="flex justify-between text-sm">
-          <span className="text-gray-500">Last Executed:</span>
-          <span className="text-gray-700">{formatDate(job.lastExecuted)}</span>
-        </div>
-        <div className="flex justify-between text-sm">
-          <span className="text-gray-500">Created:</span>
-          <span className="text-gray-700">{formatDate(job.createdAt)}</span>
+        
+        <div className="grid grid-cols-2 gap-3 text-sm">
+          <div className="flex items-center space-x-2 text-gray-500">
+            <Calendar className="h-4 w-4" />
+            <div>
+              <div className="text-xs">Last Executed</div>
+              <div className="text-gray-700 font-medium">{formatDate(job.lastExecuted)}</div>
+            </div>
+          </div>
+          <div className="flex items-center space-x-2 text-gray-500">
+            <Globe className="h-4 w-4" />
+            <div>
+              <div className="text-xs">Created</div>
+              <div className="text-gray-700 font-medium">{formatDate(job.createdAt)}</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

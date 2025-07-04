@@ -148,17 +148,22 @@ const JobForm = ({ job, onSave, onCancel }) => {
   ];
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
-        <div className="flex justify-between items-center p-6 border-b border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-900">
-            {job ? 'Edit Job' : 'Create New Job'}
-          </h2>
+    <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+      <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto border border-gray-100">
+        <div className="flex justify-between items-center p-6 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-t-2xl">
+          <div>
+            <h2 className="text-xl font-semibold text-gray-900">
+              {job ? 'Edit Job' : 'Create New Job'}
+            </h2>
+            <p className="text-sm text-gray-600 mt-1">
+              {job ? 'Update your cron job configuration' : 'Set up a new scheduled task'}
+            </p>
+          </div>
           <button
             onClick={onCancel}
-            className="text-gray-400 hover:text-gray-600"
+            className="text-gray-400 hover:text-gray-600 hover:bg-gray-100 p-2 rounded-lg transition-colors"
           >
-            <X className="h-6 w-6" />
+            <X className="h-5 w-5" />
           </button>
         </div>
 
@@ -299,23 +304,28 @@ const JobForm = ({ job, onSave, onCancel }) => {
             </label>
           </div>
 
-          <div className="flex space-x-3 pt-4">
+          <div className="flex space-x-3 pt-6 border-t border-gray-100">
             <button
               type="submit"
-              className={`flex items-center space-x-2 flex-1 btn-primary ${(!isCallbackTested || !!callbackTestError) ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : ''}`}
+              className={`flex items-center justify-center space-x-2 flex-1 font-medium py-3 px-6 rounded-lg transition-all duration-200 ${
+                (!isCallbackTested || !!callbackTestError) 
+                  ? 'bg-gray-200 text-gray-500 cursor-not-allowed' 
+                  : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl'
+              }`}
               disabled={!isCallbackTested || !!callbackTestError}
-              style={{ pointerEvents: (!isCallbackTested || !!callbackTestError) ? 'auto' : 'auto' }}
               title={!isCallbackTested ? 'Test the callback URL to enable' : ''}
             >
-              <span style={{marginRight: '0.5rem'}}>
-                {(!isCallbackTested || !!callbackTestError) ? <span role="img" aria-label="blocked">🚫</span> : <Save className="h-4 w-4" />}
-              </span>
+              {(!isCallbackTested || !!callbackTestError) ? (
+                <span role="img" aria-label="blocked" className="text-lg">🚫</span>
+              ) : (
+                <Save className="h-4 w-4" />
+              )}
               <span>{job ? 'Update Job' : 'Create Job'}</span>
             </button>
             <button
               type="button"
               onClick={onCancel}
-              className="btn-secondary flex-1"
+              className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-3 px-6 rounded-lg transition-colors duration-200"
             >
               Cancel
             </button>
