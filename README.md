@@ -2,6 +2,8 @@
 
 React frontend application for the Cron Job Manager. Built with React 19, Vite, and Tailwind CSS.
 
+🌐 **Live Demo**: [https://kriya.yashwanth.site/](https://kriya.yashwanth.site/)
+
 ## Features
 
 - 🎨 **Modern UI**: Clean and responsive design with Tailwind CSS
