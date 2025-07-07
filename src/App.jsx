@@ -9,6 +9,7 @@ import ProtectedRoute from './pages/ui/ProtectedRoute'
 import Unauthorized from './pages/ui/unAuth'
 import NotFound from './pages/ui/pageNotFound'
 import RedirectToHomeIfLoggedIn from './pages/ui/RedirectToHomeIfLoggedIn';
+import BackendStatusCheck from './pages/ui/BackendStatusCheck';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/error" element={<Unauthorized />} />
+        <Route path="/backend" element={<BackendStatusCheck />} />
         
         {/* Protected Routes */}
         <Route element={<ProtectedRoute />}>
