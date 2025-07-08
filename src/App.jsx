@@ -10,6 +10,8 @@ import Unauthorized from './pages/ui/unAuth'
 import NotFound from './pages/ui/pageNotFound'
 import RedirectToHomeIfLoggedIn from './pages/ui/RedirectToHomeIfLoggedIn';
 import BackendStatusCheck from './pages/ui/BackendStatusCheck';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
 
 function App() {
   return (
@@ -27,6 +29,8 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/error" element={<Unauthorized />} />
         <Route path="/backend" element={<BackendStatusCheck />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-of-service" element={<TermsOfService />} />
         
         {/* Protected Routes */}
         <Route element={<ProtectedRoute />}>
