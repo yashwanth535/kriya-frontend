@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Plus, RefreshCw, Search, Grid3X3, List, Clock, TrendingUp } from 'lucide-react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import Navbar from '../components/Navbar';
+import HomeNavbar from '../components/HomeNavbar';
 import JobCard from '../components/JobCard';
 import JobForm from '../components/JobForm';
 
@@ -105,7 +105,7 @@ const Home = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900">
-        <Navbar onLogout={handleLogout} />
+        <HomeNavbar onLogout={handleLogout} />
         <div className="flex justify-center items-center h-64">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
         </div>
@@ -115,7 +115,7 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900 transition-colors duration-200">
-      <Navbar onLogout={handleLogout} />
+      <HomeNavbar onLogout={handleLogout} />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Hero Section */}
