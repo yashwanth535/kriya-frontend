@@ -1,49 +1,15 @@
 import { Link } from 'react-router-dom';
-import { Clock, Zap, Shield, BarChart3, Sun, Moon, CheckCircle, Users, Globe } from 'lucide-react';
+import { Zap, Shield, BarChart3, Sun, Moon, CheckCircle, Users, Globe } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
-
+import Footer from '../components/footer';
+import Navbar from '../components/Navbar';
 const LandingPage = () => {
   const { theme, toggleTheme } = useTheme();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900 transition-colors duration-200">
       {/* Navigation */}
-      <nav className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700 transition-colors duration-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center overflow-hidden">
-                <img src="/wall-clock.png" alt="Clock Icon" className="h-5 w-5 object-contain" />
-              </div>
-              <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                Kriya
-              </h1>
-              <span className="text-sm text-gray-500 dark:text-gray-400 hidden sm:inline">Enterprise Cron Manager</span>
-            </div>
-            <div className="flex items-center space-x-4">
-              <button
-                onClick={toggleTheme}
-                className="p-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200"
-                aria-label="Toggle theme"
-              >
-                {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
-              </button>
-              <Link
-                to="/signin"
-                className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
-              >
-                Sign In
-              </Link>
-              <Link
-                to="/signup"
-                className="btn-primary"
-              >
-                Get Started
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* Hero Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
@@ -54,18 +20,18 @@ const LandingPage = () => {
           </div>
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
             Automate Your Tasks with
-            <span className="text-blue-600 dark:text-blue-400"> Precision</span>
+            <span className="text-blue-600 dark:text-blue-400"> Kriya Precision</span>
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
-            Built for enterprise teams who demand reliability, scalability, and complete visibility into their scheduled operations. 
-            Monitor, manage, and optimize your cron jobs with industry-leading tools.
+            Kriya is built for enterprise teams who demand reliability, scalability, and complete visibility into their scheduled operations. 
+            Monitor, manage, and optimize your cron jobs with Kriya's industry-leading tools. Kriya makes cron job management simple and secure.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <Link
               to="/signup"
               className="btn-primary text-lg px-8 py-3 inline-flex items-center space-x-2"
             >
-              <span>Start Free Trial</span>
+              <span>Get Started Free</span>
               <CheckCircle className="h-5 w-5" />
             </Link>
             <Link
@@ -98,10 +64,10 @@ const LandingPage = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-            Enterprise Features That Scale
+            Enterprise Features That Scale with Kriya
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Comprehensive tools designed for mission-critical operations
+            Kriya offers comprehensive tools designed for mission-critical operations. Discover why Kriya is trusted by enterprises worldwide.
           </p>
         </div>
 
@@ -111,10 +77,10 @@ const LandingPage = () => {
               <img src="/wall-clock.png" alt="Clock Icon" className="h-6 w-6 object-contain" />
             </div>
             <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-              Advanced Scheduling
+              Advanced Scheduling with Kriya
             </h3>
             <p className="text-gray-600 dark:text-gray-300">
-              Complex cron expressions with timezone support and intelligent scheduling
+              Kriya supports complex cron expressions with timezone support and intelligent scheduling.
             </p>
           </div>
 
@@ -123,10 +89,10 @@ const LandingPage = () => {
               <Zap className="h-6 w-6 text-green-600 dark:text-green-400" />
             </div>
             <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-              Real-time Monitoring
+              Real-time Monitoring by Kriya
             </h3>
             <p className="text-gray-600 dark:text-gray-300">
-              Live dashboards with instant alerts and comprehensive health checks
+              Live dashboards with instant alerts and comprehensive health checks powered by Kriya.
             </p>
           </div>
 
@@ -135,10 +101,10 @@ const LandingPage = () => {
               <BarChart3 className="h-6 w-6 text-purple-600 dark:text-purple-400" />
             </div>
             <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-              Analytics & Insights
+              Analytics & Insights from Kriya
             </h3>
             <p className="text-gray-600 dark:text-gray-300">
-              Deep performance analytics with custom reporting and trend analysis
+              Deep performance analytics with custom reporting and trend analysis, all within Kriya.
             </p>
           </div>
 
@@ -147,10 +113,10 @@ const LandingPage = () => {
               <Shield className="h-6 w-6 text-red-600 dark:text-red-400" />
             </div>
             <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-              Enterprise Security
+              Enterprise Security with Kriya
             </h3>
             <p className="text-gray-600 dark:text-gray-300">
-              SOC 2 compliant with advanced encryption and audit trails
+              Kriya is SOC 2 compliant with advanced encryption and audit trails.
             </p>
           </div>
         </div>
@@ -161,7 +127,7 @@ const LandingPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-              Trusted by Industry Leaders
+              Trusted by Industry Leaders Using Kriya
             </h2>
             <div className="flex justify-center items-center space-x-8 text-gray-400">
               <Users className="h-8 w-8" />
@@ -178,40 +144,22 @@ const LandingPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center">
             <h2 className="text-3xl font-bold text-white mb-4">
-              Ready to Transform Your Operations?
+              Kriya is Free to Use
             </h2>
             <p className="text-lg text-blue-100 mb-8">
-              Join thousands of teams already automating with confidence
+              Sign up and start using Kriya for free—no credit card or trial required.
             </p>
             <Link
               to="/signup"
               className="bg-white text-blue-600 hover:bg-gray-100 font-semibold text-lg px-8 py-3 rounded-lg transition-colors duration-200"
             >
-              Start Your Free Trial
+              Get Started Free
             </Link>
           </div>
         </div>
       </div>
 
-      {/* Footer */}
-      <footer className="bg-gray-900 dark:bg-gray-950 text-white transition-colors duration-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="text-center">
-            <div className="flex items-center justify-center space-x-3 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center overflow-hidden">
-                <img src="/wall-clock.png" alt="Clock Icon" className="h-5 w-5 object-contain" />
-              </div>
-              <h3 className="text-xl font-bold">Kriya</h3>
-            </div>
-            <p className="text-gray-400 mb-4">
-              Enterprise-grade cron job management platform
-            </p>
-            <p className="text-gray-500 text-sm">
-              © 2024 Kriya. All rights reserved.
-            </p>
-          </div>
-        </div>
-      </footer>
+      <Footer/>
     </div>
   );
 };

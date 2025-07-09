@@ -12,6 +12,7 @@ import RedirectToHomeIfLoggedIn from './pages/ui/RedirectToHomeIfLoggedIn';
 import BackendStatusCheck from './pages/ui/BackendStatusCheck';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
+import LoadingSpinner from './pages/ui/LoadingSpinner'
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path="/backend" element={<BackendStatusCheck />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-of-service" element={<TermsOfService />} />
+        <Route path='/load' element={<LoadingSpinner/>}/>
         
         {/* Protected Routes */}
         <Route element={<ProtectedRoute />}>

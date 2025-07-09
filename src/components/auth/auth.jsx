@@ -216,9 +216,9 @@ const AuthForms = ({ initialForm = "signin-form", onClose }) => {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
-            className="w-full max-w-md mx-auto"
+            className="w-full max-w-lg mx-auto"
           >
-            <h2 className="text-3xl font-bold text-center mb-8 text-white">Welcome Back</h2>
+            <h2 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white">Welcome Back</h2>
             <form onSubmit={handleSignIn} className="space-y-6">
               <div>
                 <input
@@ -226,7 +226,7 @@ const AuthForms = ({ initialForm = "signin-form", onClose }) => {
                   placeholder="Email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:border-white/40"
+                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:border-blue-400 dark:bg-white/10 dark:border-white/20 dark:text-white dark:placeholder-white/60"
                   required
                 />
               </div>
@@ -236,19 +236,19 @@ const AuthForms = ({ initialForm = "signin-form", onClose }) => {
                   placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:border-white/40 pr-12"
+                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:border-blue-400 pr-12 dark:bg-white/10 dark:border-white/20 dark:text-white dark:placeholder-white/60"
                   required
                 />
                 <button
                   type="button"
                   onClick={togglePasswordVisibility}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/60 hover:text-white"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:text-white/60 dark:hover:text-white"
                 >
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </button>
               </div>
               {message && (
-                <div className="text-red-400 text-sm text-center">{message}</div>
+                <div className="text-red-500 dark:text-red-400 text-sm text-center">{message}</div>
               )}
               <button
                 type="submit"
@@ -262,10 +262,10 @@ const AuthForms = ({ initialForm = "signin-form", onClose }) => {
             <div className="mt-6">
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-white/20"></div>
+                  <div className="w-full border-t border-gray-200 dark:border-white/20"></div>
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-gray-900 text-white/60">Or continue with</span>
+                  <span className="px-2 bg-white text-gray-500 dark:bg-gray-900 dark:text-white/60">Or continue with</span>
                 </div>
               </div>
               
@@ -284,20 +284,20 @@ const AuthForms = ({ initialForm = "signin-form", onClose }) => {
               </div>
             </div>
 
-            <div className="mt-6 text-center text-white/60">
+            <div className="mt-6 text-center text-gray-500 dark:text-white/60">
               <button
                 onClick={() => setFormType("forgot-password")}
-                className="text-blue-400 hover:text-blue-300 transition-colors"
+                className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
               >
                 Forgot your password?
               </button>
             </div>
             
-            <div className="mt-4 text-center text-white/60">
+            <div className="mt-4 text-center text-gray-500 dark:text-white/60">
               Don't have an account?{" "}
               <button
                 onClick={() => setFormType("signup-form")}
-                className="text-blue-400 hover:text-blue-300 transition-colors"
+                className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
               >
                 Sign up
               </button>
@@ -311,9 +311,9 @@ const AuthForms = ({ initialForm = "signin-form", onClose }) => {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
-            className="w-full max-w-md mx-auto"
+            className="w-full max-w-lg mx-auto"
           >
-            <h2 className="text-3xl font-bold text-center mb-8 text-white">Create Account</h2>
+            <h2 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white">Create Account</h2>
             <form onSubmit={(e) => handleOTP(e, 'signup')} className="space-y-6">
               <div>
                 <input
@@ -321,7 +321,7 @@ const AuthForms = ({ initialForm = "signin-form", onClose }) => {
                   placeholder="Email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:border-white/40"
+                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:border-blue-400 dark:bg-white/10 dark:border-white/20 dark:text-white dark:placeholder-white/60"
                   required
                 />
               </div>
@@ -331,13 +331,13 @@ const AuthForms = ({ initialForm = "signin-form", onClose }) => {
                   placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:border-white/40 pr-12"
+                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:border-blue-400 pr-12 dark:bg-white/10 dark:border-white/20 dark:text-white dark:placeholder-white/60"
                   required
                 />
                 <button
                   type="button"
                   onClick={togglePasswordVisibility}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/60 hover:text-white"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:text-white/60 dark:hover:text-white"
                 >
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </button>
@@ -348,13 +348,13 @@ const AuthForms = ({ initialForm = "signin-form", onClose }) => {
                   placeholder="Confirm Password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:border-white/40 pr-12"
+                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:border-blue-400 pr-12 dark:bg-white/10 dark:border-white/20 dark:text-white dark:placeholder-white/60"
                   required
                 />
                 <button
                   type="button"
                   onClick={toggleConfirmPasswordVisibility}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/60 hover:text-white"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:text-white/60 dark:hover:text-white"
                 >
                   {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
                 </button>
@@ -363,7 +363,7 @@ const AuthForms = ({ initialForm = "signin-form", onClose }) => {
                 <div className="text-red-400 text-sm">Passwords do not match</div>
               )}
               {message && (
-                <div className="text-red-400 text-sm text-center">{message}</div>
+                <div className="text-red-500 dark:text-red-400 text-sm text-center">{message}</div>
               )}
               <button
                 type="submit"
@@ -374,11 +374,11 @@ const AuthForms = ({ initialForm = "signin-form", onClose }) => {
               </button>
             </form>
             
-            <div className="mt-6 text-center text-white/60">
+            <div className="mt-6 text-center text-gray-500 dark:text-white/60">
               Already have an account?{" "}
               <button
                 onClick={() => setFormType("signin-form")}
-                className="text-blue-400 hover:text-blue-300 transition-colors"
+                className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
               >
                 Sign in
               </button>
@@ -392,9 +392,9 @@ const AuthForms = ({ initialForm = "signin-form", onClose }) => {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
-            className="w-full max-w-md mx-auto"
+            className="w-full max-w-lg mx-auto"
           >
-            <h2 className="text-3xl font-bold text-center mb-8 text-white">Verify OTP</h2>
+            <h2 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white">Verify OTP</h2>
             <form onSubmit={(e) => verifyOtp(e, 'signup')} className="space-y-6">
               <div>
                 <input
@@ -402,13 +402,13 @@ const AuthForms = ({ initialForm = "signin-form", onClose }) => {
                   placeholder="Enter 6-digit OTP"
                   value={otp}
                   onChange={(e) => setOtp(e.target.value)}
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:border-white/40 text-center text-2xl tracking-widest"
+                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:border-blue-400 dark:bg-white/10 dark:border-white/20 dark:text-white dark:placeholder-white/60 text-center text-2xl tracking-widest"
                   maxLength={6}
                   required
                 />
               </div>
               {message && (
-                <div className="text-red-400 text-sm text-center">{message}</div>
+                <div className="text-red-500 dark:text-red-400 text-sm text-center">{message}</div>
               )}
               <button
                 type="submit"
@@ -419,10 +419,10 @@ const AuthForms = ({ initialForm = "signin-form", onClose }) => {
               </button>
             </form>
             
-            <div className="mt-6 text-center text-white/60">
+            <div className="mt-6 text-center text-gray-500 dark:text-white/60">
               <button
                 onClick={() => setFormType("signup-form")}
-                className="text-blue-400 hover:text-blue-300 transition-colors"
+                className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
               >
                 Back to Sign Up
               </button>
@@ -436,9 +436,9 @@ const AuthForms = ({ initialForm = "signin-form", onClose }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="w-full max-w-md mx-auto"
+            className="w-full max-w-lg mx-auto"
           >
-            <h2 className="text-3xl font-bold text-center mb-8 text-white">Reset Password</h2>
+            <h2 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white">Reset Password</h2>
             <form onSubmit={(e) => handleOTP(e, 'reset')} className="space-y-6">
               <div>
                 <input
@@ -446,12 +446,12 @@ const AuthForms = ({ initialForm = "signin-form", onClose }) => {
                   placeholder="Email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:border-white/40"
+                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:border-blue-400 dark:bg-white/10 dark:border-white/20 dark:text-white dark:placeholder-white/60"
                   required
                 />
               </div>
               {message && (
-                <div className="text-red-400 text-sm text-center">{message}</div>
+                <div className="text-red-500 dark:text-red-400 text-sm text-center">{message}</div>
               )}
               <button
                 type="submit"
@@ -462,10 +462,10 @@ const AuthForms = ({ initialForm = "signin-form", onClose }) => {
               </button>
             </form>
             
-            <div className="mt-6 text-center text-white/60">
+            <div className="mt-6 text-center text-gray-500 dark:text-white/60">
               <button
                 onClick={() => setFormType("signin-form")}
-                className="text-blue-400 hover:text-blue-300 transition-colors"
+                className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
               >
                 Back to Sign In
               </button>
@@ -479,9 +479,9 @@ const AuthForms = ({ initialForm = "signin-form", onClose }) => {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
-            className="w-full max-w-md mx-auto"
+            className="w-full max-w-lg mx-auto"
           >
-            <h2 className="text-3xl font-bold text-center mb-8 text-white">Verify OTP</h2>
+            <h2 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white">Verify OTP</h2>
             <form onSubmit={(e) => verifyOtp(e, 'reset')} className="space-y-6">
               <div>
                 <input
@@ -489,13 +489,13 @@ const AuthForms = ({ initialForm = "signin-form", onClose }) => {
                   placeholder="Enter 6-digit OTP"
                   value={otp}
                   onChange={(e) => setOtp(e.target.value)}
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:border-white/40 text-center text-2xl tracking-widest"
+                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:border-blue-400 dark:bg-white/10 dark:border-white/20 dark:text-white dark:placeholder-white/60 text-center text-2xl tracking-widest"
                   maxLength={6}
                   required
                 />
               </div>
               {message && (
-                <div className="text-red-400 text-sm text-center">{message}</div>
+                <div className="text-red-500 dark:text-red-400 text-sm text-center">{message}</div>
               )}
               <button
                 type="submit"
@@ -506,10 +506,10 @@ const AuthForms = ({ initialForm = "signin-form", onClose }) => {
               </button>
             </form>
             
-            <div className="mt-6 text-center text-white/60">
+            <div className="mt-6 text-center text-gray-500 dark:text-white/60">
               <button
                 onClick={() => setFormType("forgot-password")}
-                className="text-blue-400 hover:text-blue-300 transition-colors"
+                className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
               >
                 Back to Reset Password
               </button>
@@ -523,9 +523,9 @@ const AuthForms = ({ initialForm = "signin-form", onClose }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="w-full max-w-md mx-auto"
+            className="w-full max-w-lg mx-auto"
           >
-            <h2 className="text-3xl font-bold text-center mb-8 text-white">Enter New Password</h2>
+            <h2 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white">Enter New Password</h2>
             <form onSubmit={resetPassword} className="space-y-6">
               <div className="relative">
                 <input
@@ -533,13 +533,13 @@ const AuthForms = ({ initialForm = "signin-form", onClose }) => {
                   placeholder="New Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:border-white/40 pr-12"
+                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:border-blue-400 pr-12 dark:bg-white/10 dark:border-white/20 dark:text-white dark:placeholder-white/60"
                   required
                 />
                 <button
                   type="button"
                   onClick={togglePasswordVisibility}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/60 hover:text-white"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:text-white/60 dark:hover:text-white"
                 >
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </button>
@@ -550,13 +550,13 @@ const AuthForms = ({ initialForm = "signin-form", onClose }) => {
                   placeholder="Confirm New Password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:border-white/40 pr-12"
+                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:border-blue-400 pr-12 dark:bg-white/10 dark:border-white/20 dark:text-white dark:placeholder-white/60"
                   required
                 />
                 <button
                   type="button"
                   onClick={toggleConfirmPasswordVisibility}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/60 hover:text-white"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:text-white/60 dark:hover:text-white"
                 >
                   {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
                 </button>
@@ -580,7 +580,7 @@ const AuthForms = ({ initialForm = "signin-form", onClose }) => {
               <div className="mt-6 text-center">
                 <button
                   onClick={() => setFormType("signin-form")}
-                  className="text-blue-400 hover:text-blue-300 transition-colors"
+                  className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
                 >
                   Go to Sign In
                 </button>
@@ -595,11 +595,12 @@ const AuthForms = ({ initialForm = "signin-form", onClose }) => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 p-4">
-      <div className="w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900 transition-colors duration-200 p-4">
+       <div className="w-full max-w-xl border border-gray-300 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-900 shadow-lg p-6">
         {renderForm()}
       </div>
     </div>
+
   );
 };
 
