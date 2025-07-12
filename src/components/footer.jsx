@@ -26,6 +26,22 @@ const Footer = () => {
           <p className="text-gray-500 text-sm mt-4">
             © 2024 Kriya. All rights reserved.
           </p>
+          <p className="text-sm md:text-base mt-2 text-center text-gray-400 dark:text-gray-500">
+            Created by{" "}
+            <a 
+              href="https://yashwanth.site/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-[#20D982] hover:text-[#bbe86f] transition-colors duration-300 underline"
+            >
+              Yashwanth Munikuntla
+            </a>
+            {" "} — also known as{" "}
+            <span className="text-gray-400 dark:text-gray-500">
+              Yashwanth Goud, yashwanth535
+            </span>
+            , passionate full-stack developer & creator of MoneyMind.
+          </p>
         </div>
       </div>
     </footer>
