@@ -3,9 +3,9 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import JobForm from '../components/JobForm';
-import Navbar from '../components/Navbar';
+import Navbar from '../components/HomeNavbar';
 
-import { Play, Edit, Trash2, Eye, Clock } from 'lucide-react';
+import { Play, Edit, Trash2, Eye, Clock, ArrowLeft, Pause, Play as PlayIcon } from 'lucide-react';
 
 const JobDetails = () => {
   const { jobId } = useParams();
@@ -15,6 +15,7 @@ const JobDetails = () => {
   const [showEdit, setShowEdit] = useState(false);
   const [nextRunAnimation, setNextRunAnimation] = useState(false);
   const [executing, setExecuting] = useState(false);
+  const [toggling, setToggling] = useState(false);
 
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
@@ -125,6 +126,23 @@ const JobDetails = () => {
     }
   };
 
+  const handleToggleActive = async () => {
+    setToggling(true);
+    try {
+      const response = await axios.post(`${API_URL}/api/job/${jobId}/toggle`, {}, {
+        withCredentials: true,
+      });
+      
+      setJob(response.data.job);
+      toast.success(response.data.message);
+    } catch (err) {
+      console.error('Error toggling job status:', err);
+      toast.error('Failed to update job status');
+    } finally {
+      setToggling(false);
+    }
+  };
+
   const formatNextRun = (nextRun) => {
     if (!nextRun) return 'Not scheduled';
     const now = new Date();
@@ -160,6 +178,16 @@ const JobDetails = () => {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
       <Navbar onLogout={handleLogout} />
       <div className="w-full px-4 py-8">
+        {/* Back Button */}
+        <div className="mb-6">
+          <button
+            onClick={() => navigate('/home')}
+            className="flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
+          >
+            <ArrowLeft className="h-5 w-5" />
+            <span>Back to Jobs</span>
+          </button>
+        </div>
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700 p-6 mb-6 w-full transition-colors duration-200">
           <h2 className="text-2xl font-bold mb-2 text-gray-900 dark:text-white">{job.name}</h2>
           <p className="text-gray-600 dark:text-gray-400 mb-2">{job.description}</p>
@@ -215,6 +243,27 @@ const JobDetails = () => {
                 <>
                   <Play className="h-4 w-4" />
                   <span>Execute</span>
+                </>
+              )}
+            </button>
+            <button 
+              onClick={handleToggleActive} 
+              className={`flex items-center space-x-1 text-sm ${
+                job.isActive 
+                  ? 'bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg transition-colors duration-200' 
+                  : 'bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-colors duration-200'
+              }`}
+              disabled={toggling}
+            >
+              {toggling ? (
+                <>
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                  <span>{job.isActive ? 'Pausing...' : 'Activating...'}</span>
+                </>
+              ) : (
+                <>
+                  {job.isActive ? <Pause className="h-4 w-4" /> : <PlayIcon className="h-4 w-4" />}
+                  <span>{job.isActive ? 'Pause' : 'Activate'}</span>
                 </>
               )}
             </button>

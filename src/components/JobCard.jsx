@@ -1,9 +1,32 @@
-import { Clock, CheckCircle, XCircle, Calendar, Code, Globe } from 'lucide-react';
+import { Clock, CheckCircle, XCircle, Calendar, Code, Globe, Pause, Play } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
-const JobCard = ({ job, viewMode = 'card' }) => {
+const JobCard = ({ job, viewMode = 'card', onToggleStatus }) => {
   const navigate = useNavigate();
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+  
   const handleClick = () => navigate(`/home/${job._id}`);
+  
+  const handleToggleStatus = async (e) => {
+    e.stopPropagation(); // Prevent navigation when clicking the toggle button
+    try {
+      const response = await axios.post(`${API_URL}/api/job/${job._id}/toggle`, {}, {
+        withCredentials: true,
+      });
+      
+      // Call the parent's onToggleStatus callback to update the job list
+      if (onToggleStatus) {
+        onToggleStatus(job._id, response.data.job);
+      }
+      
+      toast.success(response.data.message);
+    } catch (err) {
+      console.error('Error toggling job status:', err);
+      toast.error('Failed to update job status');
+    }
+  };
 
   const formatDate = (dateString) => {
     if (!dateString) return 'Never';
@@ -17,7 +40,7 @@ const JobCard = ({ job, viewMode = 'card' }) => {
   const getStatusBadgeColor = (isActive) => {
     return isActive 
       ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 border-green-200 dark:border-green-700' 
-      : 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300 border-red-200 dark:border-red-700';
+      : 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 border-yellow-200 dark:border-yellow-700';
   };
 
   const getStatusIcon = (isActive) => {
@@ -49,10 +72,23 @@ const JobCard = ({ job, viewMode = 'card' }) => {
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white truncate group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                   {job.name}
                 </h3>
-                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getStatusBadgeColor(job.isActive)}`}>
-                  {getStatusIcon(job.isActive)}
-                  <span className="ml-1">{job.isActive ? 'Active' : 'Inactive'}</span>
-                </span>
+                <div className="flex items-center space-x-2">
+                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getStatusBadgeColor(job.isActive)}`}>
+                    {getStatusIcon(job.isActive)}
+                    <span className="ml-1">{job.isActive ? 'Active' : 'Paused'}</span>
+                  </span>
+                  <button
+                    onClick={handleToggleStatus}
+                    className={`p-1 rounded-md transition-colors ${
+                      job.isActive 
+                        ? 'text-yellow-600 hover:bg-yellow-100 dark:hover:bg-yellow-900/30' 
+                        : 'text-green-600 hover:bg-green-100 dark:hover:bg-green-900/30'
+                    }`}
+                    title={job.isActive ? 'Pause job' : 'Activate job'}
+                  >
+                    {job.isActive ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+                  </button>
+                </div>
                 <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getMethodBadgeColor(job.method)}`}>
                   {job.method}
                 </span>
@@ -101,10 +137,23 @@ const JobCard = ({ job, viewMode = 'card' }) => {
             </div>
           </div>
         </div>
-        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getStatusBadgeColor(job.isActive)}`}>
-          {getStatusIcon(job.isActive)}
-          <span className="ml-1">{job.isActive ? 'Active' : 'Inactive'}</span>
-        </span>
+        <div className="flex items-center space-x-2">
+          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getStatusBadgeColor(job.isActive)}`}>
+            {getStatusIcon(job.isActive)}
+            <span className="ml-1">{job.isActive ? 'Active' : 'Paused'}</span>
+          </span>
+          <button
+            onClick={handleToggleStatus}
+            className={`p-1 rounded-md transition-colors ${
+              job.isActive 
+                ? 'text-yellow-600 hover:bg-yellow-100 dark:hover:bg-yellow-900/30' 
+                : 'text-green-600 hover:bg-green-100 dark:hover:bg-green-900/30'
+            }`}
+            title={job.isActive ? 'Pause job' : 'Activate job'}
+          >
+            {job.isActive ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+          </button>
+        </div>
       </div>
 
       <p className="text-gray-600 dark:text-gray-300 mb-4 text-sm leading-relaxed">{job.description}</p>

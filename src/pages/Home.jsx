@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Plus, RefreshCw, Search, Grid3X3, List, Clock, TrendingUp } from 'lucide-react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
@@ -12,17 +13,15 @@ const Home = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [showJobForm, setShowJobForm] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const navigate  = useNavigate();
   const [viewMode, setViewMode] = useState(() => {
-    // Initialize from localStorage or default to 'card'
     const savedViewMode = localStorage.getItem('viewMode');
     return savedViewMode || 'card';
   });
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+  const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     fetchJobs();
-    
-    // Set up interval to fetch jobs every minute
     const interval = setInterval(() => {
       fetchJobs(true); // Use refresh mode to avoid showing loading spinner
     }, 60000); // 60000ms = 1 minute
@@ -38,16 +37,16 @@ const Home = () => {
 
   const handleLogout = async () => {
     try {
-      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+      const API_URL = import.meta.env.VITE_API_URL;
       await fetch(`${API_URL}/auth/logout`, {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
       });
-      window.location.href = "/";
+      navigate("/");
     } catch (error) {
       console.error("Error during logout:", error);
-      window.location.href = "/";
+      navigate("/");
     }
   };
 
@@ -89,6 +88,10 @@ const Home = () => {
     }
   };
 
+  const handleToggleJobStatus = (jobId, updatedJob) => {
+    setJobs(jobs.map(job => job._id === jobId ? updatedJob : job));
+  };
+
   const handleRefresh = () => {
     fetchJobs(true);
   };
@@ -100,6 +103,7 @@ const Home = () => {
 
   const totalJobs = jobs.length;
   const activeJobs = jobs.filter(job => job.isActive).length;
+  const pausedJobs = jobs.filter(job => !job.isActive).length;
   const recentExecutions = jobs.filter(job => job.lastExecuted).length;
 
   if (loading) {
@@ -132,7 +136,7 @@ const Home = () => {
               </p>
               
               {/* Statistics Cards */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg p-4 text-white">
                   <div className="flex items-center">
                     <Clock className="h-8 w-8 mr-3" />
@@ -159,6 +163,16 @@ const Home = () => {
                     <div>
                       <p className="text-sm opacity-90">Recent Runs</p>
                       <p className="text-2xl font-bold">{recentExecutions}</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-lg p-4 text-white">
+                  <div className="flex items-center">
+                    <Clock className="h-8 w-8 mr-3" />
+                    <div>
+                      <p className="text-sm opacity-90">Paused Jobs</p>
+                      <p className="text-2xl font-bold">{pausedJobs}</p>
                     </div>
                   </div>
                 </div>
@@ -240,6 +254,16 @@ const Home = () => {
         </div>
 
         {/* Jobs Section */}
+        {pausedJobs > 0 && (
+          <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg p-4 mb-6">
+            <div className="flex items-center space-x-2">
+              <Clock className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
+              <span className="text-yellow-800 dark:text-yellow-300 font-medium">
+                {pausedJobs} job{pausedJobs > 1 ? 's are' : ' is'} currently paused
+              </span>
+            </div>
+          </div>
+        )}
         <div className="space-y-6">
           {filteredJobs.length === 0 ? (
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-12 text-center transition-colors duration-200">
@@ -250,6 +274,13 @@ const Home = () => {
               <p className="text-gray-600 dark:text-gray-400 mb-6">
                 {searchTerm ? 'Try adjusting your search terms' : 'Create your first cron job to get started'}
               </p>
+              {pausedJobs > 0 && !searchTerm && (
+                <div className="mt-4 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg">
+                  <p className="text-yellow-800 dark:text-yellow-300 text-sm">
+                    You have {pausedJobs} paused job{pausedJobs > 1 ? 's' : ''}. Paused jobs won't execute automatically.
+                  </p>
+                </div>
+              )}
               {!searchTerm && (
                 <button
                   onClick={() => setShowJobForm(true)}
@@ -270,6 +301,7 @@ const Home = () => {
                   key={job._id}
                   job={job}
                   onDelete={handleDeleteJob}
+                  onToggleStatus={handleToggleJobStatus}
                   viewMode={viewMode}
                 />
               ))}
